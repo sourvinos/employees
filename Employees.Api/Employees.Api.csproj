@@ -2,7 +2,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Employees.Models\Employees.Models.csproj" />
-        <ProjectReference Include="..\Employees.Api\Employees.Api.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
