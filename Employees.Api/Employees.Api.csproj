@@ -2,6 +2,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Employees.Models\Employees.Models.csproj" />
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
     </ItemGroup>
 
     <PropertyGroup>
