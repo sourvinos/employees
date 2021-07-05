@@ -13,6 +13,10 @@ namespace Employees.Models {
         public Department Department { get; set; }
         public string PhotoPath { get; set; }
 
+        public string FullName() {
+            return this.FirstName + " " + this.LastName;
+        }
+
     }
 
 }

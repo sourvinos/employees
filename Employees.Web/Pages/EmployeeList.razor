@@ -1,0 +1,28 @@
+@page "/"
+@inherits EmployeeListBase
+
+<h3>Employees </h3>
+
+@if (Employees == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card-deck">
+        @foreach (var employee in Employees)
+        {
+            <div class="card m-3">
+                <div class="card-header">
+                    <h3>@employee.FullName()</h3>
+                </div>
+                <img src="@employee.PhotoPath" alt="" class="card-img-top">
+                <div class="card-footer text-center">
+                    <a href="#" class="btn btn-primary m1">View</a>
+                    <a href="#" class="btn btn-primary m1">Edit</a>
+                    <a href="#" class="btn btn-danger m1">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+}
