@@ -1,7 +1,10 @@
+using System;
 using System.IO;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +26,8 @@ namespace Main {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
-            services.ConfigureSqlContext();
+            // services.ConfigureSqlContext();
+            services.AddDbContext<RepositoryContext>(opts => opts.UseMySql("server=localhost;database=employees;user=root;password=7339e731-e7d9-4c6b-8ea6-b5ee09f30ea9", new MySqlServerVersion(new Version(8, 0, 19)), b => b.MigrationsAssembly("Main")));
             services.ConfigureRepositoryManager();
             services.AddControllers();
             services.AddSwaggerGen(c => {

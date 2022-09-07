@@ -22,7 +22,7 @@ namespace LoggerService {
         }
 
         public void LogWarning(string message) {
-            throw new NotImplementedException();
+            logger.Error(message);
         }
 
     }

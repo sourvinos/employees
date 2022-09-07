@@ -1,8 +1,11 @@
+using Contracts;
+using Entities;
+
 namespace Repository {
 
     public class RepositoryManager : IRepositoryManager {
 
-        private RepositoryContext _repositoryContext;
+        private readonly RepositoryContext _repositoryContext;
 
         private ICompanyRepository _companyRepository;
         private IEmployeeRepository _employeeRepository;
@@ -18,7 +21,7 @@ namespace Repository {
                 return _companyRepository;
             }
         }
-        
+
         public IEmployeeRepository Employee {
             get {
                 if (_employeeRepository == null)
@@ -26,9 +29,9 @@ namespace Repository {
                 return _employeeRepository;
             }
         }
-        
+
         public void Save() => _repositoryContext.SaveChanges();
-        
+
     }
 
 }

@@ -6,23 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Main {
 
-    [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase {
 
-        private readonly ILoggerManager logger;
+        private readonly ILoggerManager _logger;
 
         private static readonly string[] Summaries = new[] {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         public WeatherForecastController(ILoggerManager logger) {
-            this.logger = logger;
+            _logger = logger;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get() {
-            logger.LogInfo("Hello!");
+            _logger.LogInfo("Hello!");
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast {
                 Date = DateTime.Now.AddDays(index),
