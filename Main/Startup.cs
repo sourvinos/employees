@@ -24,6 +24,7 @@ namespace Main {
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext();
+            services.ConfigureRepositoryManager();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employees", Version = "v1" });
