@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NLog;
 
-namespace Employees {
+namespace Main {
 
     public class Startup {
 

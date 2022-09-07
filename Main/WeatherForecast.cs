@@ -1,6 +1,6 @@
 using System;
 
-namespace Employees {
+namespace Main {
 
     public class WeatherForecast {
 

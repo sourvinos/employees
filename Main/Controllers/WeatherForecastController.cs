@@ -4,7 +4,7 @@ using System.Linq;
 using Contracts;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Employees.Controllers {
+namespace Main {
 
     [ApiController]
     [Route("[controller]")]
