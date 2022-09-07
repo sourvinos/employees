@@ -1,3 +1,4 @@
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using NLog;
 
 namespace Employees {
 
@@ -12,6 +14,7 @@ namespace Employees {
 
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
         }
 
         public IConfiguration Configuration { get; }
@@ -19,6 +22,7 @@ namespace Employees {
         public static void ConfigureServices(IServiceCollection services) {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+            services.ConfigureLoggerService();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employees", Version = "v1" });
