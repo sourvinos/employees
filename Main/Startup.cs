@@ -12,17 +12,18 @@ namespace Employees {
 
     public class Startup {
 
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
             LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
         }
 
-        public IConfiguration Configuration { get; }
-
         public static void ConfigureServices(IServiceCollection services) {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
+            services.ConfigureSqlContext();
             services.AddControllers();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employees", Version = "v1" });
