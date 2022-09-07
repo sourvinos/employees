@@ -61,5 +61,6 @@ FrontEnd/.firebase/*.*
 **/*.pdf
 appsettings.json
 ToDo.txt
-**/logs
+Internal_logs/
+Logs/
 desktop.ini
