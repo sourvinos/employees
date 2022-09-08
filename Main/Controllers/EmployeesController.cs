@@ -21,7 +21,7 @@ namespace Main {
 
         [HttpGet]
         public IActionResult GetEmployeesForCompany(Guid companyId) {
-            var company = _repository.Company.GetCompany(companyId, trackChanges: false);
+            var company = _repository.Company.GetCompanyById(companyId, trackChanges: false);
             if (company == null) {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
                 return NotFound();
@@ -33,7 +33,7 @@ namespace Main {
 
         [HttpGet("{id}", Name = "GetEmployeeForCompany")]
         public IActionResult GetEmployeeForCompany(Guid companyId, Guid id) {
-            var company = _repository.Company.GetCompany(companyId, trackChanges: false);
+            var company = _repository.Company.GetCompanyById(companyId, trackChanges: false);
             if (company == null) {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the atabase.");
                 return NotFound();
@@ -53,7 +53,7 @@ namespace Main {
                 _logger.LogError("EmployeeForCreationDto object sent from client is null.");
                 return BadRequest("EmployeeForCreationDto object is null");
             }
-            var company = _repository.Company.GetCompany(companyId, trackChanges: false);
+            var company = _repository.Company.GetCompanyById(companyId, trackChanges: false);
             if (company == null) {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
                 return NotFound();
