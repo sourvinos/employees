@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using AutoMapper;
 using Contracts;
 using Entities;
 using Microsoft.AspNetCore.Builder;
@@ -27,14 +28,16 @@ namespace Main {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
+            services.AddAutoMapper(typeof(Startup));
             // services.ConfigureSqlContext();
             services.AddDbContext<RepositoryContext>(opts => opts.UseMySql("server=localhost;database=employees;user=root;password=7339e731-e7d9-4c6b-8ea6-b5ee09f30ea9", new MySqlServerVersion(new Version(8, 0, 19)), b => b.MigrationsAssembly("Main")));
             services.ConfigureRepositoryManager();
-            // services.AddControllers();
-            services.AddControllers(config => {
-                config.RespectBrowserAcceptHeader = true;
-                config.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters();
+            services.AddControllers();
+            // Return XML
+            // services.AddControllers(config => {
+            //     config.RespectBrowserAcceptHeader = true;
+            //     config.ReturnHttpNotAcceptable = true;
+            // }).AddXmlDataContractSerializerFormatters();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Employees", Version = "v1" });
             });

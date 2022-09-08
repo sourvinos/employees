@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using Contracts;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Main {
 
@@ -12,10 +12,12 @@ namespace Main {
 
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public CompaniesController(IRepositoryManager repository, ILoggerManager logger) {
+        public CompaniesController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper) {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace Main {
             return Ok(companiesDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "CompanyById")]
         public IActionResult GetCompany(Guid id) {
             var company = _repository.Company.GetCompany(id, trackChanges: false);
             if (company == null) {
@@ -44,6 +46,20 @@ namespace Main {
                 return Ok(companyDto);
             }
         }
+
+        [HttpPost]
+        public IActionResult CreateCompany([FromBody] CompanyForCreationDto company) {
+            if (company == null) {
+                _logger.LogError("CompanyForCreationDto object sent from client is null."); 
+                return BadRequest("CompanyForCreationDto object is null");
+            }
+            var companyEntity = _mapper.Map<Company>(company);
+            _repository.Company.CreateCompany(companyEntity);
+            _repository.Save();
+            var companyToReturn = _mapper.Map<CompanyDTO>(companyEntity);
+            return CreatedAtRoute("CompanyById", new { id = companyToReturn.Id }, companyToReturn);
+        }
+
     }
 
 }
