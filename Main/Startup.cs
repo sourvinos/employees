@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using AutoMapper;
+using Contracts;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +26,6 @@ namespace Main {
         public static void ConfigureServices(IServiceCollection services) {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
-            services.AddAutoMapper(typeof(Startup));
             services.ConfigureLoggerService();
             // services.ConfigureSqlContext();
             services.AddDbContext<RepositoryContext>(opts => opts.UseMySql("server=localhost;database=employees;user=root;password=7339e731-e7d9-4c6b-8ea6-b5ee09f30ea9", new MySqlServerVersion(new Version(8, 0, 19)), b => b.MigrationsAssembly("Main")));
@@ -37,7 +36,7 @@ namespace Main {
             });
         }
 
-        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerManager logger) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -45,6 +44,7 @@ namespace Main {
             } else {
                 app.UseHsts();
             }
+            app.ConfigureExceptionHandler(logger);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCors("CorsPolicy");
