@@ -92,6 +92,22 @@ namespace Main {
             return CreatedAtRoute("CompanyCollection", new { ids }, companyCollectionToReturn);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateCompany(Guid id, [FromBody] CompanyForUpdateDto company) {
+            if (company == null) {
+                _logger.LogError("CompanyForUpdateDto object sent from client is null.");
+                return BadRequest("CompanyForUpdateDto object is null");
+            }
+            var companyEntity = _repository.Company.GetCompanyById(id, trackChanges: true);
+            if (companyEntity == null) {
+                _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(company, companyEntity);
+            _repository.Save();
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteCompany(Guid id) {
             var company = _repository.Company.GetCompanyById(id, trackChanges: false);
@@ -103,7 +119,7 @@ namespace Main {
             _repository.Save();
             return NoContent();
         }
-        
+
     }
 
 }
